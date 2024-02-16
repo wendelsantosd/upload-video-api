@@ -17,8 +17,8 @@ export class CreateContentUseCase {
     video?: Express.Multer.File,
     thumbnail?: Express.Multer.File
   ): Promise<Content | AppError> {
-    if (!video && !thumbnail)
-      throw new AppError("É preciso enviar um vídeo ou um thumbnail.");
+    if (!video)
+      throw new AppError("É preciso enviar um vídeo.");
 
     const content = await this.contentRepository.create(data);
 
