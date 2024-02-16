@@ -7,6 +7,6 @@
   "watch": [
     "src"
   ],
-  "exec": "npm run build && node ./dist/shared/infra/http/server.js",
+  "exec": "npm run build && node ./dist/shared/infra/http/main.js",
   "ext": "ts"
 }
