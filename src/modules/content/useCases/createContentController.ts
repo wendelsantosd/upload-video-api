@@ -6,6 +6,7 @@ export class CreateContentController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { title, description } = request.body;
     const video = request.files["video"][0];
+    const thumbnail = request.files["thumbnail"][0];
 
     const createContentUseCase = container.resolve(CreateContentUseCase);
 
@@ -14,7 +15,8 @@ export class CreateContentController {
         title,
         description,
       },
-      video
+      video,
+      thumbnail
     );
 
     return response.status(201).json(content);

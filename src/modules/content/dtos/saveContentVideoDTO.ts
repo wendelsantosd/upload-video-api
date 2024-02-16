@@ -1,4 +1,4 @@
-export interface ISaveContentVideoDTO {
+export interface ISaveContentFileDTO {
   contentId: string;
   name: string;
   size: number;

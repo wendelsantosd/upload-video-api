@@ -2,9 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { Content } from "@prisma/client";
 import { ICreateContentDTO } from "../dtos/createContentDTO";
 import { IContentRepository } from "../repositories/IContentRepository";
-import { ISaveContentVideoDTO } from "../dtos/saveContentVideoDTO";
 import { serveStatic } from "@shared/config/env/serveStatic";
-import { Multer } from "multer";
 
 @injectable()
 export class CreateContentUseCase {
@@ -15,7 +13,8 @@ export class CreateContentUseCase {
 
   async execute(
     data: ICreateContentDTO,
-    video?: Express.Multer.File
+    video?: Express.Multer.File,
+    thumbnail?: Express.Multer.File
   ): Promise<Content> {
     const content = await this.contentRepository.create(data);
 
@@ -25,6 +24,14 @@ export class CreateContentUseCase {
         url: `${serveStatic.url}/videos/${video.filename}`,
         name: video.filename,
         size: video.size,
+      });
+
+    if (thumbnail)
+      await this.contentRepository.saveThumbnailContent({
+        contentId: content.id,
+        url: `${serveStatic.url}/thumbnails/${thumbnail.filename}`,
+        name: thumbnail.filename,
+        size: thumbnail.size,
       });
 
     return content;
