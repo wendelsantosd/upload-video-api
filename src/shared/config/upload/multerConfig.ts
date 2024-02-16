@@ -1,12 +1,16 @@
 import { AppError } from "@shared/errors/AppError";
-import multer, { diskStorage } from "multer";
+import { diskStorage } from "multer";
 import path from "path";
 
 export const storageVideoMulterConfig = {
   dest: path.resolve(__dirname, "..", "..", "..", "..", "uploads"),
   storage: diskStorage({
-    destination: (req, res, callback) => {
-      callback(null, path.resolve("uploads/videos"));
+    destination: (req, file, callback) => {
+      if (file.mimetype.includes("image")) {
+        callback(null, path.resolve("uploads/thumbnails"));
+      } else {
+        callback(null, path.resolve("uploads/videos"));
+      }
     },
     filename: (req, file, callback) => {
       const time = new Date().getTime();
@@ -15,13 +19,19 @@ export const storageVideoMulterConfig = {
     },
   }),
   fileFilter: (req, file, callback) => {
-    const allowedVideoMimes = ["video/mp4", "video/webm"];
+    const allowedMimes = [
+      "video/mp4",
+      "video/webm",
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+    ];
     const mimeTypes = file.mimetype;
 
-    if (allowedVideoMimes.includes(mimeTypes)) {
+    if (allowedMimes.includes(mimeTypes)) {
       callback(null, true);
     } else {
-      callback(new AppError("Arquivo inválido. Aceita somente mp4, webm."));
+      callback(new AppError("Arquivo inválido"));
     }
   },
 };

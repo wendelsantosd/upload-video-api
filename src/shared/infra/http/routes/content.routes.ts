@@ -9,6 +9,15 @@ const createContentController = new CreateContentController();
 
 contentRoutes.post(
   "/upload/video",
-  multer(storageVideoMulterConfig).single("video"),
+  multer(storageVideoMulterConfig).fields([
+    {
+      name: "video",
+      maxCount: 1,
+    },
+    {
+      name: "thumbnail",
+      maxCount: 1,
+    },
+  ]),
   createContentController.handle
 );
