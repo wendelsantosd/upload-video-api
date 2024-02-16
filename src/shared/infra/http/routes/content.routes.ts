@@ -1,4 +1,5 @@
-import { CreateContentController } from "@modules/content/useCases/createContentController";
+import { CreateContentController } from "@modules/content/useCases/createContent/createContentController";
+import { ListContentController } from "@modules/content/useCases/listContent/listContentController";
 import { storageVideoMulterConfig } from "@shared/config/upload/multerConfig";
 import { Router } from "express";
 import multer from "multer";
@@ -6,6 +7,7 @@ import multer from "multer";
 export const contentRoutes = Router();
 
 const createContentController = new CreateContentController();
+const listContentController = new ListContentController();
 
 contentRoutes.post(
   "/upload/video",
@@ -21,3 +23,5 @@ contentRoutes.post(
   ]),
   createContentController.handle
 );
+
+contentRoutes.get("/videos", listContentController.handle);

@@ -4,6 +4,7 @@ import { ISaveContentFileDTO } from "../dtos/saveContentVideoDTO";
 
 export interface IContentRepository {
   create(data: ICreateContentDTO): Promise<Content>;
+  list(): Promise<Content[]>
   saveVideoContent(data: ISaveContentFileDTO): Promise<Video>;
   saveThumbnailContent(data: ISaveContentFileDTO): Promise<Thumbnail>;
 }

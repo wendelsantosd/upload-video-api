@@ -10,6 +10,14 @@ export class ContentRepository implements IContentRepository {
   constructor() {
     this.repository = prismaClient;
   }
+  async list(): Promise<Content[]> {
+    return await this.repository.content.findMany({
+      include: {
+        video: true,
+        thumbnail: true,
+      }
+    });
+  }
 
   async create(data: ICreateContentDTO): Promise<Content> {
     return await this.repository.content.create({ data });

@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { Content } from "@prisma/client";
-import { ICreateContentDTO } from "../dtos/createContentDTO";
-import { IContentRepository } from "../repositories/IContentRepository";
+import { ICreateContentDTO } from "../../dtos/createContentDTO";
+import { IContentRepository } from "../../repositories/IContentRepository";
 import { serveStatic } from "@shared/config/env/serveStatic";
 import { AppError } from "@shared/errors/AppError";
 
