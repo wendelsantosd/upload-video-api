@@ -21,13 +21,12 @@ export class CreateContentUseCase {
 
     const content = await this.contentRepository.create(data);
 
-    if (video)
-      await this.contentRepository.saveVideoContent({
-        contentId: content.id,
-        url: `${serveStatic.url}/videos/${video.filename}`,
-        name: video.filename,
-        size: video.size,
-      });
+    await this.contentRepository.saveVideoContent({
+      contentId: content.id,
+      url: `${serveStatic.url}/videos/${video.filename}`,
+      name: video.filename,
+      size: video.size,
+    });
 
     if (thumbnail)
       await this.contentRepository.saveThumbnailContent({
