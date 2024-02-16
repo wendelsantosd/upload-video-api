@@ -14,6 +14,9 @@ export const bootstrapAPI = async () => {
   app.use(cors());
   app.use(router);
 
+  app.use("/videos", express.static("uploads/videos"));
+  app.use("/thumbnails", express.static("uploads/thumbnails"));
+
   app.use(
     (
       error: Error,
