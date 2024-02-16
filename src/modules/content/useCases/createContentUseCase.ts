@@ -16,9 +16,8 @@ export class CreateContentUseCase {
     data: ICreateContentDTO,
     video?: Express.Multer.File,
     thumbnail?: Express.Multer.File
-  ): Promise<Content | AppError> {
-    if (!video)
-      throw new AppError("É preciso enviar um vídeo.");
+  ): Promise<Content> {
+    if (!video) throw new AppError("É preciso enviar um vídeo.");
 
     const content = await this.contentRepository.create(data);
 
