@@ -6,9 +6,9 @@ export class DownloadVideoContentController {
   async handle(request: Request, response: Response) {
     const { id } = request.params;
 
-    const getContentUseCase = container.resolve(DownloadVideoContentUseCase);
+    const downloadVideoContentUseCase = container.resolve(DownloadVideoContentUseCase);
 
-    const content = await getContentUseCase.execute({ id });
+    const content = await downloadVideoContentUseCase.execute({ id });
 
     return response.status(200).json({
       url: content.video.url,
