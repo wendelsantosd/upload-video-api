@@ -9,3 +9,39 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Content {
+  id          String     @id @unique @default(uuid())
+  title       String
+  description String?
+  video       Video?
+  thumbnail   Thumbnail?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime?  @updatedAt
+
+  @@map("contents")
+}
+
+model Video {
+  id        String   @id @unique @default(uuid())
+  name      String
+  size      Int
+  url       String
+  contentId String   @unique
+  content   Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@map("videos")
+}
+
+model Thumbnail {
+  id        String   @id @unique @default(uuid())
+  name      String
+  size      Int
+  url       String
+  contentId String   @unique
+  content   Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@map("thumbnails")
+}
