@@ -5,8 +5,8 @@ import { CreateContentUseCase } from "./createContentUseCase";
 export class CreateContentController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { title, description } = request.body;
-    const video = request.files["video"][0];
-    const thumbnail = request.files["thumbnail"][0];
+    const video = request?.files["video"]?.[0];
+    const thumbnail = request?.files["thumbnail"]?.[0];
 
     const createContentUseCase = container.resolve(CreateContentUseCase);
 
@@ -18,7 +18,7 @@ export class CreateContentController {
       video,
       thumbnail
     );
-
+    
     return response.status(201).json(content);
   }
 }

@@ -3,6 +3,7 @@ import { Content } from "@prisma/client";
 import { ICreateContentDTO } from "../dtos/createContentDTO";
 import { IContentRepository } from "../repositories/IContentRepository";
 import { serveStatic } from "@shared/config/env/serveStatic";
+import { AppError } from "@shared/errors/AppError";
 
 @injectable()
 export class CreateContentUseCase {
@@ -15,7 +16,10 @@ export class CreateContentUseCase {
     data: ICreateContentDTO,
     video?: Express.Multer.File,
     thumbnail?: Express.Multer.File
-  ): Promise<Content> {
+  ): Promise<Content | AppError> {
+    if (!video && !thumbnail)
+      throw new AppError("É preciso enviar um vídeo ou um thumbnail.");
+
     const content = await this.contentRepository.create(data);
 
     if (video)
