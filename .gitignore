@@ -4,3 +4,4 @@ dist
 prisma/migrations
 yarn-error.log
 uploads
+.docker
