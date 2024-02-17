@@ -19,7 +19,7 @@ export class DownloadVideoContentUseCase {
   async execute({ id }: IRequest): Promise<IContent> {
     const content = await this.contentRepository.getById(id);
 
-    if (!content) throw new AppError("Conteúdo não existe.");
+    if (!content) throw new AppError("Conteúdo não encontrado.", 404);
 
     return content;
   }

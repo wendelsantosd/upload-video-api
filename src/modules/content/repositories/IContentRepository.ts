@@ -11,6 +11,7 @@ export interface IContentRepository {
   create(data: ICreateContentDTO): Promise<Content>;
   getById(id: string): Promise<IContent>;
   list(): Promise<Content[]>;
+  delete(id: string): Promise<string>;
   saveVideoContent(data: ISaveContentFileDTO): Promise<Video>;
   saveThumbnailContent(data: ISaveContentFileDTO): Promise<Thumbnail>;
 }

@@ -1,4 +1,5 @@
 import { CreateContentController } from "@modules/content/useCases/createContent/createContentController";
+import { DeleteContentController } from "@modules/content/useCases/deleteContent/deleteContentController";
 import { DownloadVideoContentController } from "@modules/content/useCases/downloadVideoContent/downloadVideoContentController";
 import { GetContentController } from "@modules/content/useCases/getContent/getContentController";
 import { ListContentController } from "@modules/content/useCases/listContent/listContentController";
@@ -12,6 +13,7 @@ const createContentController = new CreateContentController();
 const listContentController = new ListContentController();
 const downloadVideoContentController = new DownloadVideoContentController();
 const getContentController = new GetContentController();
+const deleteContentUseCase = new DeleteContentController();
 
 contentRoutes.post(
   "/upload/video",
@@ -30,3 +32,4 @@ contentRoutes.post(
 contentRoutes.get("/videos", listContentController.handle);
 contentRoutes.get("/download/video/:id", downloadVideoContentController.handle);
 contentRoutes.get("/video/:id", getContentController.handle);
+contentRoutes.delete("/delete/:id", deleteContentUseCase.handle);

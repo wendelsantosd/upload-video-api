@@ -1,6 +1,9 @@
 import { ICreateContentDTO } from "@modules/content/dtos/createContentDTO";
 import { ISaveContentFileDTO } from "@modules/content/dtos/saveContentVideoDTO";
-import { IContent, IContentRepository } from "@modules/content/repositories/IContentRepository";
+import {
+  IContent,
+  IContentRepository,
+} from "@modules/content/repositories/IContentRepository";
 import { Content, PrismaClient, Thumbnail, Video } from "@prisma/client";
 import { prismaClient } from "@shared/infra/database/prisma/client";
 
@@ -10,6 +13,7 @@ export class ContentRepository implements IContentRepository {
   constructor() {
     this.repository = prismaClient;
   }
+
   async list(): Promise<IContent[]> {
     return await this.repository.content.findMany({
       include: {
@@ -25,10 +29,10 @@ export class ContentRepository implements IContentRepository {
       include: {
         video: true,
         thumbnail: true,
-      }
+      },
     });
 
-    return content
+    return content;
   }
 
   async create(data: ICreateContentDTO): Promise<Content> {
@@ -41,5 +45,13 @@ export class ContentRepository implements IContentRepository {
 
   async saveThumbnailContent(data: ISaveContentFileDTO): Promise<Thumbnail> {
     return await this.repository.thumbnail.create({ data });
+  }
+
+  async delete(id: string): Promise<string> {
+    await this.repository.content.delete({
+      where: { id },
+    });
+
+    return "Conteúdo removido com sucesso.";
   }
 }
