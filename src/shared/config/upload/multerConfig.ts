@@ -25,6 +25,7 @@ export const storageVideoMulterConfig = {
       "image/jpeg",
       "image/jpg",
       "image/png",
+      "image/webp",
     ];
     const mimeTypes = file.mimetype;
 
