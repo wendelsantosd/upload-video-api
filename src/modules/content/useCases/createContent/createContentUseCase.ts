@@ -17,6 +17,7 @@ export class CreateContentUseCase {
     video?: Express.Multer.File,
     thumbnail?: Express.Multer.File
   ): Promise<Content> {
+    if (!data.title) throw new AppError("O campo título não pode ser vazio.");
     if (!video) throw new AppError("É preciso enviar um vídeo.");
 
     const content = await this.contentRepository.create(data);
